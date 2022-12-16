@@ -1,4 +1,11 @@
 module Model
+  module Direction
+    UP = :up
+    DOWN = :down
+    LEFT = :left
+    RIGHT = :right
+  end
+
   class Coordinate < Struct.new(:row, :col)
   end
 
@@ -11,7 +18,7 @@ module Model
   class Snake < Struct.new(:coordinates)
   end
 
-  class State < Struct.new(:snake, :food, :board)
+  class State < Struct.new(:snake, :food, :board, :next_direction)
   end
 
   def self.initial_state
@@ -21,7 +28,8 @@ module Model
         Model::Coordinate.new(0, 1),
       ]),
       Model::Food.new(4, 4),
-      Model::Board.new(8, 12)
+      Model::Board.new(8, 12),
+      Model::Direction::DOWN
     )
   end
 end
