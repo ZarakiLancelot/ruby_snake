@@ -3,7 +3,9 @@ module Actions
     next_direction = state.current_direction
     next_position = calc_next_position(state)
 
-    if next_position_is_valid?(state, next_position)
+    if next_position_is_food?(state, next_position)
+      grow_snake(state, next_position)
+    elsif next_position_is_valid?(state, next_position)
       move_snake_to(state, next_position)
     else
       end_game(state)
@@ -21,6 +23,17 @@ module Actions
   end
 
   private
+
+  def self.next_position_is_food?(state, next_position)
+    state.food.row == next_position.row && state.food.col == next_position.col
+  end
+
+  def self.grow_snake(state, next_position)
+    new_positions = [next_position] + state.snake.coordinates
+    state.snake.coordinates = new_positions
+
+    state
+  end
 
   def self.calc_next_position(state)
     current_position = state.snake.coordinates.first
