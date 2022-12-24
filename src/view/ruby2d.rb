@@ -3,8 +3,9 @@ require_relative '../model/state'
 
 module View
   class Ruby2dView
-    def initialize
+    def initialize(app)
       @square_size = 50
+      @app = app
     end
 
     def start(state)
@@ -15,6 +16,11 @@ module View
         width: @square_size * state.board.cols,
         height: @square_size * state.board.rows
       )
+
+      on :key_down do |event|
+        handle_key_event(event)
+        puts event.key
+      end
       show
     end
 
@@ -51,6 +57,19 @@ module View
           size: @square_size,
           color: 'white'
         )
+      end
+    end
+
+    def handle_key_event(event)
+      case event.key
+      when "up"
+        @app.send_action(:change_direction, Model::Direction::UP)
+      when "down"
+        @app.send_action(:change_direction, Model::Direction::DOWN)
+      when "left"
+        @app.send_action(:change_direction, Model::Direction::LEFT)
+      when "right"
+        @app.send_action(:change_direction, Model::Direction::RIGHT)
       end
     end
   end
