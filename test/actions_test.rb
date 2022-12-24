@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+require 'minitest/mock'
 require_relative '../src/actions/actions'
 require_relative '../src/model/state'
 
@@ -82,5 +83,12 @@ class ActionsTest < MiniTest::Test
       Model::Coordinate.new(1, 1),
       Model::Coordinate.new(0, 1)
     ])
+  end
+
+  def test_generate_food
+    Actions.stub(:rand, 0) do
+      actual_state = Actions::generate_food(@initial_state)
+      assert_equal(actual_state.food, Model::Food.new(0, 0))
+    end
   end
 end

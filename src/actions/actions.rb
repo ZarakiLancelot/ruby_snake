@@ -5,6 +5,7 @@ module Actions
 
     if next_position_is_food?(state, next_position)
       grow_snake(state, next_position)
+      generate_food(state)
     elsif next_position_is_valid?(state, next_position)
       move_snake_to(state, next_position)
     else
@@ -23,6 +24,11 @@ module Actions
   end
 
   private
+
+  def self.generate_food(state)
+    state.food = Model::Food.new(rand(state.board.rows), rand(state.board.cols))
+    state
+  end
 
   def self.next_position_is_food?(state, next_position)
     state.food.row == next_position.row && state.food.col == next_position.col
