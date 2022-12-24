@@ -18,7 +18,7 @@ module Model
   class Snake < Struct.new(:coordinates)
   end
 
-  class State < Struct.new(:snake, :food, :board, :next_direction, :game_over)
+  class State < Struct.new(:snake, :food, :board, :current_direction, :game_over)
   end
 
   def self.initial_state
