@@ -19,12 +19,14 @@ module View
 
       on :key_down do |event|
         handle_key_event(event)
-        puts event.key
+        # puts event.key
       end
       show
     end
 
     def render(state)
+      extend Ruby2D::DSL
+      close if state.game_over
       render_snake(state)
       render_food(state)
     end
